@@ -1,28 +1,34 @@
 // src/components/Layout.tsx
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { motion } from 'framer-motion';
+import Transition from './Transition';
+import { AnimatePresence } from 'framer-motion';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { theme } = useContext(ThemeContext);
+  const location = useLocation();
+
   return (
-    <>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-bg text-white' : 'bg-light-bg text-black'}`}>
       <Navbar />
-      <motion.main
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -20, opacity: 0 }}
-        transition={{ ease: 'easeInOut', duration: 0.75 }}
-        className="min-h-screen"
-      >
-        {children}
-      </motion.main>
+      <AnimatePresence mode="wait">
+        {/* Use location.pathname as the key to trigger animations on route change */}
+        <Transition key={location.pathname}>
+          <main className="flex-grow">
+            {children}
+          </main>
+        </Transition>
+      </AnimatePresence>
       <Footer />
-    </>
+    </div>
   );
 };
 

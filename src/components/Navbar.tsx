@@ -1,9 +1,11 @@
 // src/components/Navbar.tsx
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { AppBar, Toolbar, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 interface NavLinkProps {
   isActive: boolean;
@@ -18,14 +20,18 @@ const NavbarContainer = styled('div')({
   zIndex: 10,
 });
 
-// Extend LinkProps to include isActive
 const NavLink = styled(Link)<NavLinkProps>(({ theme, isActive }) => ({
-  color: isActive ? 'var(--color-primary)' : 'rgba(255, 255, 255, 0.7)',
+  color: isActive
+    ? theme.palette.mode === 'dark'
+      ? 'var(--color-primary)'
+      : 'var(--color-secondary)'
+    : `var(--color-text-${theme.palette.mode === 'dark' ? 'light' : 'dark'})`,
   textDecoration: 'none',
   marginRight: theme.spacing(2),
   position: 'relative',
   overflow: 'hidden',
   fontFamily: 'Inter, sans-serif',
+
   '&:before': {
     content: '""',
     position: 'absolute',
@@ -33,25 +39,28 @@ const NavLink = styled(Link)<NavLinkProps>(({ theme, isActive }) => ({
     height: '2px',
     bottom: 0,
     left: 0,
-    backgroundColor: 'var(--color-primary)',
-    visibility: 'hidden',
-    transform: 'scaleX(0)',
+    backgroundColor: isActive
+      ? theme.palette.mode === 'dark'
+        ? 'var(--color-primary)'
+        : 'var(--color-secondary)'
+      : 'transparent',
+    visibility: isActive ? 'visible' : 'hidden',
+    transform: isActive ? 'scaleX(1)' : 'scaleX(0)',
     transition: 'all 0.3s ease-in-out',
   },
   '&:hover:before': {
     visibility: 'visible',
     transform: 'scaleX(1)',
+    backgroundColor:
+      theme.palette.mode === 'dark' ? 'var(--color-primary)' : 'var(--color-secondary)',
   },
   '&:hover': {
-    color: 'var(--color-primary)',
-  },
-  '&:active': {
-    color: 'var(--color-primary)',
+    color: theme.palette.mode === 'dark' ? 'var(--color-primary)' : 'var(--color-secondary)',
   },
 }));
 
 const Logo = styled('img')({
-  height: '60px',
+  height: '40px', // Adjusted smaller size
   objectFit: 'contain',
   cursor: 'pointer',
 });
@@ -60,6 +69,10 @@ const Navbar = memo(() => {
   Navbar.displayName = 'Navbar';
 
   const location = useLocation();
+  const { theme } = useContext(ThemeContext);
+
+  // Choose the correct logo based on the theme
+  const logoSrc = theme === 'dark' ? '/agent_alpha_name.png' : '/agent_alpha_name_dark.png';
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -68,18 +81,23 @@ const Navbar = memo(() => {
           <Toolbar>
             <Box display="flex" alignItems="center" width="100%">
               <Link to="/">
-                <Logo src="/agent_alpha_name.png" alt="Agent Alpha Logo" />
+                <Logo src={logoSrc} alt="Agent Alpha Logo" />
               </Link>
               <Box flexGrow={1} />
+              {/* NavLinks */}
               <NavLink to="/about" isActive={location.pathname === '/about'}>
                 About
               </NavLink>
               <NavLink to="/projects" isActive={location.pathname === '/projects'}>
                 Projects
               </NavLink>
-              <NavLink to="/#contact" isActive={location.hash === '#contact'}>
+              <NavLink to="/contact" isActive={location.pathname === '/contact'}>
                 Contact
               </NavLink>
+              {/* ThemeToggle */}
+              <Box ml={2}>
+                <ThemeToggle />
+              </Box>
             </Box>
           </Toolbar>
         </AppBar>

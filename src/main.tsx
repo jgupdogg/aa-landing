@@ -1,16 +1,29 @@
 // src/main.tsx
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import AppRoutes from './routes';
-import { Amplify } from 'aws-amplify'; // Named import
-// import awsconfig from './aws-exports';
+import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
-import './index.css'; // Ensure this path is correct
+import './index.css';
+import { ThemeProvider as ContextThemeProvider, ThemeContext } from './contexts/ThemeContext';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { lightTheme, darkTheme } from './theme';
 
 Amplify.configure({});
 
+const AppWithTheme: React.FC = () => {
+  const { theme } = useContext(ThemeContext);
+  return (
+    <MUIThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
+      <AppRoutes />
+    </MUIThemeProvider>
+  );
+};
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AppRoutes />
+    <ContextThemeProvider>
+      <AppWithTheme />
+    </ContextThemeProvider>
   </React.StrictMode>
 );
