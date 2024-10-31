@@ -1,7 +1,5 @@
 // src/components/ClientLayout.tsx
-import React from 'react'; // Add this import
-import Navbar from './Navbar';
-import Footer from './Footer';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 interface ClientLayoutProps {
