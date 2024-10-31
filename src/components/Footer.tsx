@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
           &copy; 2023 Agent Alpha LLC
         </div>
         <div className="flex space-x-6">
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/justin-gupta-p-e-06162686/" target="_blank" rel="noopener noreferrer">
             <FaLinkedin className={`${textColor} ${hoverColor}`} size={24} />
           </a>
           <a href="https://github.com/jgupdogg" target="_blank" rel="noopener noreferrer">
