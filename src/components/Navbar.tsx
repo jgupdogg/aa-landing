@@ -60,7 +60,7 @@ const NavLink = styled(Link)<NavLinkProps>(({ theme, isActive }) => ({
 }));
 
 const Logo = styled('img')({
-  height: '40px', // Adjusted smaller size
+  height: '40px',
   objectFit: 'contain',
   cursor: 'pointer',
 });
@@ -71,13 +71,19 @@ const Navbar = memo(() => {
   const location = useLocation();
   const { theme } = useContext(ThemeContext);
 
-  // Choose the correct logo based on the theme
   const logoSrc = theme === 'dark' ? '/agent_alpha_name.png' : '/agent_alpha_name_dark.png';
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <NavbarContainer>
-        <AppBar position="fixed" color="transparent" elevation={0}>
+        <AppBar
+          position="fixed"
+          color="transparent" // Set the color to transparent
+          elevation={1}
+          sx={{
+            backgroundColor: theme === 'dark' ? 'var(--color-dark-bg)' : 'var(--color-light-bg)',
+          }}
+        >
           <Toolbar>
             <Box display="flex" alignItems="center" width="100%">
               <Link to="/">

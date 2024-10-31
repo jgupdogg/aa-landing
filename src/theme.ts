@@ -1,6 +1,6 @@
 // src/theme.ts
 import { createTheme } from '@mui/material/styles';
-import { colors } from '../tailwind.config'; // Import colors from Tailwind config
+import colors from './colors'; // Import centralized colors
 
 const lightTheme = createTheme({
   palette: {
@@ -18,6 +18,9 @@ const lightTheme = createTheme({
     text: {
       primary: colors.textDark,
     },
+  },
+  typography: {
+    fontFamily: 'Inter, sans-serif', // Ensure consistency with Tailwind's font
   },
 });
 
@@ -37,6 +40,9 @@ const darkTheme = createTheme({
     text: {
       primary: colors.textLight,
     },
+  },
+  typography: {
+    fontFamily: 'Inter, sans-serif', // Ensure consistency with Tailwind's font
   },
 });
 

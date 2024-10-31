@@ -1,9 +1,10 @@
 // src/pages/Projects.tsx
 import React, { useContext } from 'react';
-import { Typography, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import { FaGithub } from 'react-icons/fa';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { Button } from '../components/button';
+import { Button } from '../components/button'; // Assuming you have a Button component similar to Home.jsx
+import clsx from 'clsx'; // Ensure clsx is installed via npm or yarn
 
 // Define interfaces for project components and projects
 interface ProjectComponent {
@@ -100,14 +101,24 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   const { theme } = useContext(ThemeContext);
 
-  // Define theme-based classes
-  const textColor = theme === 'dark' ? 'text-white' : 'text-gray-800';
+  // Define theme-based classes using Tailwind color names
+  const textColor = theme === 'dark' ? 'text-textLight' : 'text-textDark';
   const secondaryTextColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-600';
-  const borderColor = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
+  const bgColor1 = theme === 'dark' ? 'bg-darkBg' : 'bg-lightBg';
+  const oddBlockBg = theme === 'dark' ? 'bg-oddBlockDark' : 'bg-oddBlock';
+  const evenBlockBg = theme === 'dark' ? 'bg-evenBlockDark' : 'bg-evenBlock';
+
+  // Define gradient classes based on the theme to match content box backgrounds
+  const gradientClasses = theme === 'dark'
+    ? 'from-oddBlockDark to-evenBlockDark' // Dark mode: matches oddBlockBg to evenBlockBg
+    : 'from-oddBlock to-evenBlock'; // Light mode: matches oddBlockBg to evenBlockBg
+
+  // Define text color for the Hero section based on the theme
+  const gradientTextColor = theme === 'dark' ? 'text-white' : 'text-textDark';
 
   // Define button classes with different hover behavior based on theme
-  const buttonBgColor = theme === 'dark' ? 'bg-primary-dark' : 'bg-primary';
-  const buttonTextColor = theme === 'dark' ? 'text-white' : 'text-primary-foreground';
+  const buttonBgColor = 'bg-secondary';
+  const buttonTextColor = theme === 'dark' ? 'text-white' : 'text-primaryForeground';
   const buttonHoverClass = theme === 'dark' ? 'hover:bg-primary-dark/90' : 'hover:bg-primary/90';
 
   // Define hover classes for table rows
@@ -115,98 +126,103 @@ const Projects: React.FC = () => {
     theme === 'dark' ? 'dark:hover:bg-gray-500/10' : 'hover:bg-gray-100/20';
 
   return (
-    <div className="w-full flex flex-col items-center justify-start text-left py-24 px-4 relative">
-      {/* Background Gradient */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500 to-green-500 opacity-10 dark:from-blue-700 dark:to-green-700 pointer-events-none"></div>
+    <div className={`relative min-h-screen flex flex-col items-center ${bgColor1}`}>
+      {/* Hero Section */}
+      <section className={`w-full flex flex-col items-center justify-center py-24 bg-gradient-to-r ${gradientClasses} ${gradientTextColor} mb-8`}>
+        <Typography variant="h2" className="font-bold mb-4">
+          Our Projects
+        </Typography>
+        <Typography variant="h6">
+          Explore Our Diverse Portfolio
+        </Typography>
+      </section>
 
-      <div className="relative flex flex-col items-start justify-start w-full max-w-5xl">
-        <Typography variant="h2" className={`font-bold mb-4 ${textColor}`}>
-          Projects
-        </Typography>
-        <Typography variant="h6" className={`mb-8 ${secondaryTextColor}`}>
-          Here are some of my projects...
-        </Typography>
-        <Box className="w-full bg-transparent p-4 space-y-12">
-          {projects.map((project: Project, projectIndex: number) => (
-            <div key={projectIndex} className="flex flex-col items-start w-full">
-              {/* Project Title and Live Link Button */}
-              <div className="flex items-center justify-between w-full">
-                <Typography variant="h4" className={`font-semibold mb-2 ${textColor}`}>
-                  {project.title}
-                </Typography>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className={`${buttonBgColor} ${buttonTextColor} ${buttonHoverClass}`}
-                  asChild
-                >
-                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                    View Live
-                  </a>
-                </Button>
-              </div>
-              {/* Project Description and Date */}
-              <Typography variant="subtitle1" className={`mb-1 ${secondaryTextColor}`}>
-                {project.description}
+      {/* Projects Container */}
+      <section className="w-full max-w-5xl flex flex-col space-y-12">
+        {projects.map((project: Project, projectIndex: number) => (
+          <div
+            key={projectIndex}
+            className={`flex flex-col items-start w-full p-6 rounded-lg shadow-lg ${
+              projectIndex % 2 === 0 ? oddBlockBg : evenBlockBg
+            }`}
+          >
+            {/* Project Header */}
+            <div className="flex items-center justify-between w-full">
+              <Typography variant="h4" className={`font-semibold mb-2 ${textColor}`}>
+                {project.title}
               </Typography>
-              <Typography variant="subtitle2" className={`mb-4 ${secondaryTextColor}`}>
-                Date: {project.date}
-              </Typography>
-              {/* Components Table */}
-              <div className="overflow-x-auto">
-                <table className="table-auto w-full text-left">
-                  <thead>
-                    <tr className={secondaryTextColor}>
-                      <th scope="col" className="px-4 py-2">
-                        Component
-                      </th>
-                      <th scope="col" className="px-4 py-2">
-                        Description
-                      </th>
-                      <th scope="col" className="px-4 py-2">
-                        Hosted On
-                      </th>
-                      <th scope="col" className="px-4 py-2">
-                        Framework / Packages
-                      </th>
-                      <th scope="col" className="px-4 py-2 text-center">
-                        Repo
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {project.components.map((component: ProjectComponent, compIndex: number) => (
-                      <tr
-                        key={compIndex}
-                        className={`border-b ${borderColor} ${tableRowHoverClass}`}
-                      >
-                        <td className={`px-4 py-2 ${textColor}`}>{component.name}</td>
-                        <td className={`px-4 py-2 ${secondaryTextColor}`}>{component.description}</td>
-                        <td className={`px-4 py-2 ${secondaryTextColor}`}>{component.hostedOn}</td>
-                        <td className={`px-4 py-2 ${secondaryTextColor}`}>
-                          <span>{component.framework}</span>
-                          <br />
-                          <span className="text-sm">{component.packages}</span>
-                        </td>
-                        <td className="px-4 py-2 text-center">
-                          <a
-                            href={component.git}
-                            className={`${secondaryTextColor} hover:${textColor}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <FaGithub size={24} />
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <Button
+                variant="default"
+                size="lg"
+                className={`${buttonBgColor} ${buttonTextColor} ${buttonHoverClass}`}
+                asChild
+              >
+                <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                  View Live
+                </a>
+              </Button>
             </div>
-          ))}
-        </Box>
-      </div>
+            {/* Project Description and Date */}
+            <Typography variant="subtitle1" className={`mb-1 ${secondaryTextColor}`}>
+              {project.description}
+            </Typography>
+            <Typography variant="subtitle2" className={`mb-4 ${secondaryTextColor}`}>
+              Date: {new Date(project.date).toLocaleDateString()}
+            </Typography>
+            {/* Components Table */}
+            <div className="overflow-x-auto w-full">
+              <table className="table-auto w-full text-left">
+                <thead>
+                  <tr className={`border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'}`}>
+                    <th scope="col" className="px-4 py-2">
+                      Component
+                    </th>
+                    <th scope="col" className="px-4 py-2">
+                      Description
+                    </th>
+                    <th scope="col" className="px-4 py-2">
+                      Hosted On
+                    </th>
+                    <th scope="col" className="px-4 py-2">
+                      Framework / Packages
+                    </th>
+                    <th scope="col" className="px-4 py-2 text-center">
+                      Repo
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {project.components.map((component: ProjectComponent, compIndex: number) => (
+                    <tr
+                      key={compIndex}
+                      className={`border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} ${tableRowHoverClass}`}
+                    >
+                      <td className={`px-4 py-2 ${textColor}`}>{component.name}</td>
+                      <td className={`px-4 py-2 ${secondaryTextColor}`}>{component.description}</td>
+                      <td className={`px-4 py-2 ${secondaryTextColor}`}>{component.hostedOn}</td>
+                      <td className={`px-4 py-2 ${secondaryTextColor}`}>
+                        <span>{component.framework}</span>
+                        <br />
+                        <span className="text-sm">{component.packages}</span>
+                      </td>
+                      <td className="px-4 py-2 text-center">
+                        <a
+                          href={component.git}
+                          className={`${secondaryTextColor} hover:${textColor}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaGithub size={24} />
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </section>
     </div>
   );
 };

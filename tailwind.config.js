@@ -1,36 +1,20 @@
 // tailwind.config.js
 import plugin from 'tailwindcss/plugin';
-
-const colors = {
-  primary: '#00ffff',
-  primaryDark: '#009e99',         // Dark mode primary
-  primaryForeground: '#00ffff',
-  destructive: '#cbc5ea',
-  destructiveForeground: '#313d5a',
-  input: '#73628a',
-  background: '#313d5a',
-  accent: '#00ffff',
-  accentForeground: '#1F2937',
-  secondary: '#183642',
-  secondaryForeground: '#111827',
-  ring: '#3B82F6',
-  darkBg: '#363732', // Dark theme background
-  lightBg: '#F9FAFB', // Light theme background
-  textDark: '#111827', // Text for light theme
-  textLight: '#FFFFFF', // Text for dark theme
-};
-
-export { colors };
+import colors from './src/colors'; // Adjust the path if necessary
 
 export default {
+  darkMode: 'class', // Enable dark mode via class
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/app/**/*.{js,ts,jsx,tsx}', 
+    './src/app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      colors,
+      colors, // Use the centralized colors
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'], // Ensure Inter font is defined
+      },
     },
   },
   plugins: [
@@ -39,17 +23,19 @@ export default {
         ':root': {
           '--color-primary': theme('colors.primary'),
           '--color-primary-foreground': theme('colors.primaryForeground'),
-          '--color-destructive': theme('colors.destructive'),
-          '--color-destructive-foreground': theme('colors.destructiveForeground'),
-          '--color-input': theme('colors.input'),
-          '--color-background': theme('colors.background'),
-          '--color-accent': theme('colors.accent'),
-          '--color-accent-foreground': theme('colors.accentForeground'),
           '--color-secondary': theme('colors.secondary'),
           '--color-secondary-foreground': theme('colors.secondaryForeground'),
-          '--color-ring': theme('colors.ring'),
+          '--color-accent': theme('colors.accent'),
+          '--color-accent-foreground': theme('colors.accentForeground'),
+          '--color-destructive': theme('colors.destructive'),
+          '--color-destructive-foreground': theme('colors.destructiveForeground'),
+          '--color-background': theme('colors.background'),
           '--color-dark-bg': theme('colors.darkBg'),
           '--color-light-bg': theme('colors.lightBg'),
+          '--color-odd-block': theme('colors.oddBlock'),
+          '--color-even-block': theme('colors.evenBlock'),
+          '--color-odd-block-dark': theme('colors.oddBlockDark'),
+          '--color-even-block-dark': theme('colors.evenBlockDark'),
           '--color-text-dark': theme('colors.textDark'),
           '--color-text-light': theme('colors.textLight'),
         },

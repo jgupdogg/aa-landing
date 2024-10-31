@@ -12,19 +12,17 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useContext(ThemeContext);
   const location = useLocation();
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark-bg text-white' : 'bg-light-bg text-black'}`}>
+    <div className={`min-h-screen flex flex-col ${theme === 'dark' ? 'bg-dark-bg text-white' : 'bg-light-bg text-black'}`}>
       <Navbar />
       <AnimatePresence mode="wait">
         {/* Use location.pathname as the key to trigger animations on route change */}
         <Transition key={location.pathname}>
-          <main className="flex-grow">
-            {children}
-          </main>
+          <main className="flex-grow w-full">{children}</main> {/* Ensure this can expand */}
         </Transition>
       </AnimatePresence>
       <Footer />
