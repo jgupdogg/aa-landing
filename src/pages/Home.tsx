@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import { Typography } from '@mui/material';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { Button } from '../components/button';
-import clsx from 'clsx'; // Ensure clsx is installed via npm or yarn
 
 const Home = () => {
   const { theme } = useContext(ThemeContext);
@@ -17,8 +16,8 @@ const Home = () => {
 
   // Define gradient classes based on the theme to match content box backgrounds
   const gradientClasses = theme === 'dark'
-    ? 'from-oddBlockDark to-evenBlockDark' // Dark mode: matches oddBlockBg to evenBlockBg
-    : 'from-oddBlock to-evenBlock'; // Light mode: matches oddBlockBg to evenBlockBg
+    ? 'from-oddBlockDark to-evenBlockDark' 
+    : 'from-oddBlock to-evenBlock'; 
 
   // Define text color for the Hero section based on the theme
   const gradientTextColor = theme === 'dark' ? 'text-white' : 'text-textDark';
@@ -36,7 +35,7 @@ const Home = () => {
           Welcome to Agent Alpha
         </Typography>
         <Typography variant="h6">
-          Freelance Data Projects & Portfolio Showcase
+          Freelance Data Projects & Portfolio Showcase of Justin Gupta P.E.
         </Typography>
       </section>
 
