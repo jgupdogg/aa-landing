@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           <a href="https://github.com/jgupdogg" target="_blank" rel="noopener noreferrer">
             <FaGithub className={`${textColor} ${hoverColor}`} size={24} />
           </a>
-          <a href="#contact">
+          <a href="mailto:admin@agentalpha.ai">
             <FaEnvelope className={`${textColor} ${hoverColor}`} size={24} />
           </a>
         </div>
