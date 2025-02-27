@@ -1,23 +1,36 @@
 // src/colors.js
 const colors = {
-    primary: '#99D5C9', // Tiffany Blue for accents and highlights
-    primaryForeground: '#FFFFFF', // White for contrast
-    secondary: '#6C969D', // Moonstone for secondary elements
-    secondaryForeground: '#FFFFFF', // White for contrast
-    accent: '#645E9D', // Ultra Violet for accent
-    accentForeground: '#FFFFFF', // White for contrast
-    destructive: '#2D0320', // Dark Purple for destructive actions
-    destructiveForeground: '#FFFFFF', // White for contrast
-    background: '#EFD2CB', // Light mode background
-    darkBg: '#170F11', // Dark mode background
-    lightBg: '#f8edeb', // Light mode background
-    oddBlock: '#D4C5E2', // Odd numbered block background (light mode)
-    evenBlock: '#99D5C9', // Even numbered block background (light mode)
-    oddBlockDark: '#392B58', // Odd numbered block background (dark mode)
-    evenBlockDark: '#2D0320', // Even numbered block background (dark mode)
-    textDark: '#111827', // Dark text for light mode
-    textLight: '#FFFFFF', // Light text for dark mode
-  };
+  // New color palette
+  primary: '#3E442B',       // Drab dark brown
+  primaryDark: '#3E442B',   // Same for dark mode
+  primaryForeground: '#FFFFFF',
   
-  export default colors;
+  secondary: '#6A7062',     // Ebony
+  secondaryDark: '#6A7062', // Same for dark mode
+  secondaryForeground: '#FFFFFF',
   
+  accent: '#8D909B',        // Cool gray
+  accentForeground: '#FFFFFF',
+  
+  // UI feedback colors
+  destructive: '#FF4444',
+  destructiveDark: '#FF6666',
+  destructiveForeground: '#FFFFFF',
+  
+  // Background colors
+  background: '#FFFFFF',
+  darkBg: '#3E442B',        // Using drab dark brown for dark background
+  lightBg: '#F9FAFB',       // Light background
+  
+  // Content block colors
+  oddBlock: '#AAADC4',      // Cool gray (lighter)
+  evenBlock: '#D6EEFF',     // Columbia blue
+  oddBlockDark: '#6A7062',  // Ebony
+  evenBlockDark: '#8D909B', // Cool gray
+  
+  // Text colors
+  textDark: '#3E442B',      // Drab dark brown for text
+  textLight: '#D6EEFF',     // Columbia blue for light text
+};
+
+export default colors;

@@ -11,9 +11,35 @@ export default {
   ],
   theme: {
     extend: {
-      colors, // Use the centralized colors
+      colors: {
+        ...colors,
+        // Additional shortcuts for the new color scheme
+        'drab-brown': '#3E442B',
+        'ebony': '#6A7062',
+        'cool-gray': '#8D909B',
+        'cool-gray-light': '#AAADC4',
+        'columbia-blue': '#D6EEFF',
+      },
       fontFamily: {
-        inter: ['Inter', 'sans-serif'], // Ensure Inter font is defined
+        inter: ['Inter', 'sans-serif'],
+      },
+      boxShadow: {
+        'custom': '0 4px 14px 0 rgba(0, 0, 0, 0.1)',
+        'custom-hover': '0 10px 25px 0 rgba(0, 0, 0, 0.15)',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in',
+        'slide-up': 'slideUp 0.5s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
       },
     },
   },
@@ -21,23 +47,31 @@ export default {
     plugin(function({ addBase, theme }) {
       addBase({
         ':root': {
-          '--color-primary': theme('colors.primary'),
-          '--color-primary-foreground': theme('colors.primaryForeground'),
-          '--color-secondary': theme('colors.secondary'),
-          '--color-secondary-foreground': theme('colors.secondaryForeground'),
-          '--color-accent': theme('colors.accent'),
-          '--color-accent-foreground': theme('colors.accentForeground'),
-          '--color-destructive': theme('colors.destructive'),
-          '--color-destructive-foreground': theme('colors.destructiveForeground'),
-          '--color-background': theme('colors.background'),
-          '--color-dark-bg': theme('colors.darkBg'),
-          '--color-light-bg': theme('colors.lightBg'),
-          '--color-odd-block': theme('colors.oddBlock'),
-          '--color-even-block': theme('colors.evenBlock'),
-          '--color-odd-block-dark': theme('colors.oddBlockDark'),
-          '--color-even-block-dark': theme('colors.evenBlockDark'),
-          '--color-text-dark': theme('colors.textDark'),
-          '--color-text-light': theme('colors.textLight'),
+          '--color-primary': theme('colors.drab-brown'),
+          '--color-primary-foreground': '#FFFFFF',
+          '--color-secondary': theme('colors.ebony'),
+          '--color-secondary-foreground': '#FFFFFF',
+          '--color-accent': theme('colors.cool-gray'),
+          '--color-accent-foreground': '#FFFFFF',
+          '--color-destructive': '#FF4444',
+          '--color-destructive-foreground': '#FFFFFF',
+          '--color-background': '#FFFFFF',
+          '--color-dark-bg': theme('colors.drab-brown'),
+          '--color-light-bg': '#F9FAFB',
+          '--color-odd-block': theme('colors.cool-gray-light'),
+          '--color-even-block': theme('colors.columbia-blue'),
+          '--color-odd-block-dark': theme('colors.ebony'),
+          '--color-even-block-dark': theme('colors.cool-gray'),
+          '--color-text-dark': theme('colors.drab-brown'),
+          '--color-text-light': theme('colors.columbia-blue'),
+        },
+        '.dark': {
+          '--color-primary': theme('colors.columbia-blue'),
+          '--color-primary-foreground': theme('colors.drab-brown'),
+          '--color-secondary': theme('colors.cool-gray-light'),
+          '--color-secondary-foreground': theme('colors.drab-brown'),
+          '--color-background': theme('colors.drab-brown'),
+          '--color-text-primary': theme('colors.columbia-blue'),
         },
       });
     }),
