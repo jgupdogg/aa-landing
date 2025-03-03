@@ -9,6 +9,7 @@ import './theme-variables.css'; // Import our CSS variables
 import { ThemeProvider as ContextThemeProvider, ThemeContext } from './contexts/ThemeContext';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './theme';
+import { HelmetProvider } from 'react-helmet-async';
 
 Amplify.configure({});
 
@@ -34,8 +35,10 @@ const AppWithTheme: React.FC = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ContextThemeProvider>
-      <AppWithTheme />
-    </ContextThemeProvider>
+    <HelmetProvider>
+      <ContextThemeProvider>
+        <AppWithTheme />
+      </ContextThemeProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

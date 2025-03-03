@@ -1,12 +1,13 @@
 /* src/App.css */
 
+/* Base styles */
 .app-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
-  /* Hero section animation */
+  /* Hero section styling */
   .hero-section {
     position: relative;
     overflow: hidden;
@@ -33,85 +34,251 @@
     z-index: 2;
   }
   
+  /* Typewriter cursor blinking animation */
+  @keyframes blinking-cursor {
+    0%, 100% { border-color: transparent }
+    50% { border-color: currentColor }
+  }
+  
+  /* Pipeline animation */
+  .pipeline-animation {
+    width: 100%;
+    height: 300px;
+    position: relative;
+  }
+  
+  .pipeline-path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: drawPath 2s forwards ease-out;
+  }
+  
+  @keyframes drawPath {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .node {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 1.8s;
+  }
+  
+  .node2 {
+    animation-delay: 2s;
+  }
+  
+  .node3 {
+    animation-delay: 2.2s;
+  }
+  
+  .branch {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: drawPath 1s forwards ease-out;
+    animation-delay: 2.5s;
+  }
+  
+  .branch2 {
+    animation-delay: 2.7s;
+  }
+  
+  .data-dot {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    animation-delay: 3s;
+  }
+  
   /* Card hover effects */
   .MuiCard-root {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .MuiCard-root:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Card icon animations */
+  .MuiCard-root svg {
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .MuiCard-root:hover svg {
+    transform: scale(1.1);
+    color: var(--color-accent) !important;
   }
   
   /* Button transitions */
   .MuiButton-root {
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
   
-  .MuiButton-contained {
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
+  .MuiButton-contained::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
   }
   
-  .MuiButton-contained:hover {
-    background-color: var(--color-secondary);
+  .MuiButton-contained:hover::after {
+    left: 100%;
   }
   
-  .dark .MuiButton-contained {
-    background-color: var(--color-text-light);
-    color: var(--color-primary);
+  /* Data particles background */
+  .data-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
   }
   
-  .dark .MuiButton-contained:hover {
-    background-color: var(--color-odd-block);
+  .data-particles::before,
+  .data-particles::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-image: 
+      radial-gradient(circle, var(--color-primary) 2px, transparent 2px),
+      radial-gradient(circle, var(--color-secondary) 1px, transparent 1px);
+    background-size: 40px 40px, 30px 30px;
+    background-position: 0 0, 15px 15px;
+    opacity: 0.1;
+    animation: particlesDrift 20s linear infinite;
   }
   
-  .MuiButton-outlined {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+  .data-particles::after {
+    background-size: 30px 30px, 20px 20px;
+    background-position: 5px 5px, 20px 20px;
+    animation-direction: reverse;
+    animation-duration: 15s;
   }
   
-  .MuiButton-outlined:hover {
-    border-color: var(--color-secondary);
-    color: var(--color-secondary);
+  @keyframes particlesDrift {
+    0% {
+      transform: translateX(0) translateY(0);
+    }
+    100% {
+      transform: translateX(40px) translateY(40px);
+    }
   }
   
-  .dark .MuiButton-outlined {
-    border-color: var(--color-text-light);
-    color: var(--color-text-light);
+  /* Project visualization styling */
+  .project-visual {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    position: relative;
   }
   
-  .dark .MuiButton-outlined:hover {
-    border-color: var(--color-odd-block);
-    color: var(--color-odd-block);
+  .project-visual svg {
+    overflow: visible;
   }
   
-  /* Typography color adjustments */
-  .MuiTypography-root {
-    color: var(--color-text-dark);
+  .project-visual rect,
+  .project-visual circle {
+    transition: all 0.5s ease;
   }
   
-  .dark .MuiTypography-root {
-    color: var(--color-text-light);
+  .MuiCard-root:hover .project-visual rect,
+  .MuiCard-root:hover .project-visual circle {
+    filter: drop-shadow(0 0 5px rgba(214, 238, 255, 0.5));
+    transform: translateY(-2px);
   }
   
-  /* Service card icon animations */
-  .MuiCard-root svg {
-    transition: transform 0.3s ease;
+  /* Data flow decoration */
+  .data-flow-decoration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    overflow: hidden;
+    z-index: 1;
   }
   
-  .MuiCard-root:hover svg {
-    transform: scale(1.1);
+  .data-flow-decoration::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: 
+      linear-gradient(90deg, transparent 0%, var(--color-primary) 50%, transparent 100%);
+    opacity: 0.1;
+    transform: translateY(50%);
+    animation: dataFlowWave 5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes dataFlowWave {
+    0% {
+      transform: translateY(50%) scaleX(1);
+    }
+    100% {
+      transform: translateY(50%) scaleX(1.2);
+    }
+  }
+  
+  /* General animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
   
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;
-  }
-  
-  /* Add space between main content and footer */
-  footer {
-    margin-top: auto;
   }
   
   /* Custom scrollbar */
@@ -136,26 +303,20 @@
     background: var(--color-secondary);
   }
   
-  /* Add animation for page transitions */
-  .fade-in {
-    animation: fadeIn 0.5s ease-in;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .pipeline-animation {
+      height: 250px;
     }
   }
   
-  /* Additional styles for responsive design */
   @media (max-width: 600px) {
     .hero-section {
       text-align: center;
+    }
+    
+    .pipeline-animation {
+      height: 200px;
     }
     
     .MuiButton-root {
